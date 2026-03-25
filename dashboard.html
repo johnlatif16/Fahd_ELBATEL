@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تحكم المسؤول</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+      --success: #28a745;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--primary);
+    }
+    
+    h2 {
+      color: var(--dark);
+      margin: 0;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .btn-warning {
+      background: var(--warning);
+      color: var(--dark);
+    }
+    
+    .btn-warning:hover {
+      background: #e0a800;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .btn-info {
+      background: #17a2b8;
+      color: white;
+    }
+    
+    .btn-info:hover {
+      background: #138496;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+    
+    th, td {
+      border: 1px solid #dee2e6;
+      padding: 12px 15px;
+      text-align: left;
+    }
+    
+    th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    
+    tr:hover {
+      background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    .score-high {
+      color: var(--success);
+      font-weight: bold;
+    }
+    
+    .score-medium {
+      color: var(--warning);
+      font-weight: bold;
+    }
+    
+    .score-low {
+      color: var(--danger);
+      font-weight: bold;
+    }
+    
+    .action-cell {
+      width: 280px;
+      text-align: center;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .stat-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #6c757d;
+      font-style: italic;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    
+    .status-allowed {
+      background-color: rgba(40, 167, 69, 0.2);
+      color: var(--success);
+    }
+    
+    .status-disallowed {
+      background-color: rgba(220, 53, 69, 0.2);
+      color: var(--danger);
+    }
+    
+    /* Styles for questions display */
+    .questions-container {
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin-top: 10px;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .question-item {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-left: 4px solid #ddd;
+    }
+    
+    .question-item.correct {
+      border-left-color: var(--success);
+    }
+    
+    .question-item.incorrect {
+      border-left-color: var(--danger);
+    }
+    
+    .question-text {
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    
+    .answer-row {
+      display: flex;
+      margin-bottom: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      align-items: center;
+    }
+    
+    .answer-correct {
+      background-color: rgba(40, 167, 69, 0.1);
+      border: 1px solid rgba(40, 167, 69, 0.3);
+    }
+    
+    .answer-incorrect {
+      background-color: rgba(220, 53, 69, 0.1);
+      border: 1px solid rgba(220, 53, 69, 0.3);
+    }
+    
+    .answer-label {
+      font-weight: 600;
+      min-width: 150px;
+      margin-right: 10px;
+    }
+    
+    .questions-toggle {
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .questions-row {
+      background-color: #f8f9fa;
+    }
+    
+    .questions-row td {
+      padding: 0;
+    }
+    
+    .questions-content {
+      padding: 20px;
+    }
+    
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .attempt-stats {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: var(--border-radius);
+    }
+    
+    .attempt-stats p {
+      margin: 5px 0;
+    }
+    
+    .attempt-history {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #dee2e6;
+      border-radius: var(--border-radius);
+      padding: 10px;
+    }
+    
+    .attempt-item {
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+    }
+    
+    .attempt-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h2>لوحة تحكم المسؤول</h2>
+      <div class="btn-group">
+        <button class="btn-primary" onclick="loadResults()">عرض النتائج</button>
+        <button class="btn-danger" onclick="logout()">تسجيل خروج</button>
+      </div>
+    </header>
+    
+    <div class="stats" id="stats" style="display: none;">
+      <div class="stat-card">
+        <div class="stat-label">إجمالي المشاركين</div>
+        <div class="stat-value" id="totalParticipants">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">متوسط الدرجات</div>
+        <div class="stat-value" id="averageScore">0%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">أعلى نتيجة</div>
+        <div class="stat-value" id="highestScore">0%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">أدنى درجة</div>
+        <div class="stat-value" id="lowestScore">0%</div>
+      </div>
+    </div>
+    
+    <table id="resultsTable" class="hidden">
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>رقم الهاتف</th>
+          <th>نتيجة (%)</th>
+          <th>صحيح</th>
+          <th>خطأ</th>
+          <th>الحالة</th>
+          <th class="action-cell">الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login.html";
+    }
+
+    // تعريف الإجابات الصحيحة
+    const correctAnswers = {
+      q1: "B", q2: "A", q3: "B"
+    };
+
+    // تعريف خيارات الإجابات لكل سؤال
+    const answerOptions = {
+      q1: { A: "السبت", B: "الاحد", C: "الاثنين", D: "الثلاثاء" , E: "الاربعاء" , F: "الخميس"  ,G: "الجمعة" },
+      q2: { A: "تيك توك", B: "نيتفلكس", C: "يوتيوب", D: "لا شئ مما سبق" },
+      q3: { A: "الصيف", B: "الشتاء", C: "الخريف", D: "الربيع" }
+    };
+
+    // تعريف نصوص الأسئلة
+    const questionTexts = {
+      q1: "1. ما هو اليوم المفضل لدي من ايام الاسبوع؟",
+      q2: "2. ما هو اكثر تطبيق استخدمه؟",
+      q3: "3. ما هو موسمي المفضل؟"
+    };
+
+    // متغير لتخزين البيانات
+    let allResults = [];
+
+    // دالة لإنشاء عرض الأسئلة والإجابات
+    function createQuestionsDisplay(userAnswers) {
+      if (!userAnswers || Object.keys(userAnswers).length === 0) {
+        return '<div class="questions-container"><p>No answers available for this student</p></div>';
+      }
+
+      let html = '<div class="questions-container">';
+      html += '<h3>Student Answers Details</h3>';
+      
+      Object.keys(questionTexts).forEach(questionId => {
+        const userAnswer = userAnswers[questionId];
+        const correctAnswer = correctAnswers[questionId];
+        const isCorrect = userAnswer === correctAnswer;
+        
+        const userAnswerText = userAnswer ? (answerOptions[questionId][userAnswer] || 'Unknown') : 'لم يتم الإجابة';
+        const correctAnswerText = answerOptions[questionId][correctAnswer];
+        
+        html += `
+          <div class="question-item ${isCorrect ? 'correct' : 'incorrect'}">
+            <div class="question-text">${questionTexts[questionId]}</div>
+            <div class="answer-row ${isCorrect ? 'answer-correct' : 'answer-incorrect'}">
+              <span class="answer-label">إجابة الشخص:</span>
+              <span><strong>${userAnswerText}</strong> ${userAnswer ? `(${userAnswer})` : ''}</span>
+            </div>
+            <div class="answer-row answer-correct">
+              <span class="answer-label">الإجابة الصحيحة:</span>
+              <span><strong>${correctAnswerText}</strong> (${correctAnswer})</span>
+            </div>
+            <div class="answer-row">
+              <span class="answer-label">الحالة:</span>
+              <span style="color: ${isCorrect ? 'green' : 'red'}; font-weight: bold;">
+                ${isCorrect ? '✓ صحيحة' : '✗ خاطئة'}
+              </span>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += '</div>';
+      return html;
+    }
+
+    // دالة مبسطة لعرض/إخفاء الأسئلة
+    function toggleQuestions(userId) {
+      const questionsRow = document.getElementById(`questions-${userId}`);
+      
+      if (questionsRow) {
+        // إذا كان موجودًا بالفعل، قم بإزالته
+        questionsRow.remove();
+        // تغيير نص الزر إلى "اظهار"
+        const button = document.querySelector(`tr[data-user-id="${userId}"] .toggle-questions-btn`);
+        if (button) {
+          button.textContent = 'اظهار الاسئلة بالاجابات';
+        }
+      } else {
+        // البحث عن بيانات المستخدم
+        const userResult = allResults.find(r => r.id === userId);
+        if (!userResult) return;
+        
+        // إنشاء الصف الجديد
+        const row = document.createElement('tr');
+        row.id = `questions-${userId}`;
+        row.className = 'questions-row';
+        row.innerHTML = `
+          <td colspan="7">
+            <div class="questions-content">
+              ${createQuestionsDisplay(userResult.userAnswers || {})}
+              <div class="questions-toggle">
+                <button class="btn-info" onclick="toggleQuestions('${userId}')">اخفاء الأسئلة</button>
+              </div>
+            </div>
+          </td>
+        `;
+        
+        // إدراج الصف بعد الصف الحالي للطالب
+        const userRow = document.querySelector(`tr[data-user-id="${userId}"]`);
+        if (userRow && userRow.parentNode) {
+          userRow.parentNode.insertBefore(row, userRow.nextSibling);
+          
+          // تغيير نص الزر إلى "اخفاء"
+          const button = userRow.querySelector('.toggle-questions-btn');
+          if (button) {
+            button.textContent = 'اخفاء الاسئلة';
+          }
+        }
+      }
+    }
+
+    // دالة لعرض محاولات المستخدم
+    async function showUserAttempts(userId, phone) {
+      try {
+        const response = await fetch(`/api/attempts/${phone}`);
+        const attempts = await response.json();
+        
+        if (response.ok) {
+          const attemptStats = calculateAttemptStats(attempts);
+          
+          // إنشاء نافذة عرض المحاولات
+          const modal = document.createElement('div');
+          modal.className = 'modal';
+          
+          modal.innerHTML = `
+            <div class="modal-content">
+              <h3>User Attempts Statistics - ${phone}</h3>
+              <div class="attempt-stats">
+                <p><strong>Total Attempts:</strong> ${attemptStats.total}</p>
+                <p><strong>Started:</strong> ${attemptStats.started}</p>
+                <p><strong>Refreshed:</strong> ${attemptStats.refreshed}</p>
+                <p><strong>Submitted:</strong> ${attemptStats.submitted}</p>
+                <p><strong>Auto-submitted:</strong> ${attemptStats.autoSubmitted}</p>
+              </div>
+              <h4>Attempt History</h4>
+              <div class="attempt-history">
+                ${attempts.map(attempt => `
+                  <div class="attempt-item">
+                    <strong>${attempt.action}</strong> - 
+                    ${new Date(attempt.timestamp?.toDate?.() || attempt.timestamp).toLocaleString()}
+                  </div>
+                `).join('')}
+              </div>
+              <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-primary" onclick="this.closest('.modal').remove()">Close</button>
+              </div>
+            </div>
+          `;
+          
+          document.body.appendChild(modal);
+        }
+      } catch (error) {
+        console.error("Error loading attempts:", error);
+        alert("Failed to load user attempts");
+      }
+    }
+
+    // دالة لحساب إحصائيات المحاولات
+    function calculateAttemptStats(attempts) {
+      const stats = {
+        total: attempts.length,
+        started: attempts.filter(a => a.action === 'start').length,
+        refreshed: attempts.filter(a => a.action === 'refresh').length,
+        submitted: attempts.filter(a => a.action === 'submit').length,
+        autoSubmitted: attempts.filter(a => a.action === 'refresh_auto_submit').length
+      };
+      
+      return stats;
+    }
+
+    async function loadResults() {
+      try {
+        const res = await fetch("/api/results", {
+          headers: { "Authorization": "Bearer " + token }
+        });
+        
+        if (res.status === 401) { 
+          logout(); 
+          return; 
+        }
+        
+        const data = await res.json();
+        allResults = data; // تخزين البيانات في المتغير العام
+        
+        const table = document.getElementById("resultsTable");
+        const tbody = table.querySelector("tbody");
+        const stats = document.getElementById("stats");
+        
+        tbody.innerHTML = "";
+        
+        if (data.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="no-results">
+                No quiz results available
+              </td>
+            </tr>
+          `;
+        } else {
+          // Calculate statistics
+          const totalParticipants = data.length;
+          const totalScore = data.reduce((sum, r) => sum + r.score, 0);
+          const averageScore = Math.round(totalScore / totalParticipants);
+          const highestScore = Math.max(...data.map(r => r.score));
+          const lowestScore = Math.min(...data.map(r => r.score));
+          
+          // Update stats
+          document.getElementById('totalParticipants').textContent = totalParticipants;
+          document.getElementById('averageScore').textContent = `${averageScore}%`;
+          document.getElementById('highestScore').textContent = `${highestScore}%`;
+          document.getElementById('lowestScore').textContent = `${lowestScore}%`;
+          stats.style.display = 'grid';
+          
+          // Populate table
+          data.forEach(r => {
+            const scoreClass = r.score >= 70 ? 'score-high' : 
+                              r.score >= 50 ? 'score-medium' : 'score-low';
+            
+            const isAllowed = r.allowedRetake === true;
+            const statusBadge = isAllowed 
+              ? '<span class="status-badge status-allowed">Allowed</span>' 
+              : '<span class="status-badge status-disallowed">Not Allowed</span>';
+            
+            // التأكد من وجود userAnswers
+            const hasUserAnswers = r.userAnswers && Object.keys(r.userAnswers).length > 0;
+            
+            tbody.innerHTML += `
+              <tr data-user-id="${r.id}">
+                <td>${r.name}</td>
+                <td>${r.phone}</td>
+                <td class="${scoreClass}">${r.score}%</td>
+                <td>${r.correct}</td>
+                <td>${r.wrong}</td>
+                <td>${statusBadge}</td>
+                <td class="action-cell">
+                  <div class="action-buttons">
+                    <button class="btn-info" onclick="showUserAttempts('${r.id}', '${r.phone}')">
+                      عرض المحاولات
+                    </button>
+                    <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}')">
+                      ${hasUserAnswers ? 'اظهار الاسئلة بالاجابات' : 'لا توجد إجابات'}
+                    </button>
+                    ${isAllowed 
+                      ? `<button class="btn-warning" onclick="disallowRetake('${r.id}')">قفل</button>` 
+                      : `<button class="btn-success" onclick="allowRetake('${r.id}')">فتح</button>`
+                    }
+                    <button class="btn-danger" onclick="deleteResult('${r.id}')">Delete</button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          });
+        }
+        
+        table.classList.remove("hidden");
+      } catch (error) {
+        console.error("Error loading results:", error);
+        alert("Failed to load results");
+      }
+    }
+
+    async function allowRetake(id) {
+      try {
+        const res = await fetch(`/api/results/${id}/allow-retake`, {
+          method: "POST",
+          headers: { 
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          }
+        });
+        
+        if (res.ok) {
+          alert("Quiz retake allowed successfully");
+          loadResults();
+        } else {
+          const data = await res.json();
+          alert(data.message || "Failed to allow retake");
+        }
+      } catch (error) {
+        console.error("Error allowing retake:", error);
+        alert("Failed to allow retake");
+      }
+    }
+
+    async function disallowRetake(id) {
+      try {
+        const res = await fetch(`/api/results/${id}/disallow-retake`, {
+          method: "POST",
+          headers: { 
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          }
+        });
+        
+        if (res.ok) {
+          alert("Quiz retake disallowed successfully");
+          loadResults();
+        } else {
+          const data = await res.json();
+          alert(data.message || "Failed to disallow retake");
+        }
+      } catch (error) {
+        console.error("Error disallowing retake:", error);
+        alert("Failed to disallow retake");
+      }
+    }
+
+    async function deleteResult(id) {
+      if (!confirm("Are you sure you want to delete this result? The user will be able to retake the quiz.")) {
+        return;
+      }
+      
+      try {
+        const res = await fetch(`/api/results/${id}`, {
+          method: "DELETE",
+          headers: { 
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          }
+        });
+        
+        if (res.ok) {
+          alert("Result deleted successfully");
+          loadResults();
+        } else {
+          const data = await res.json();
+          alert(data.message || "Failed to delete result");
+        }
+      } catch (error) {
+        console.error("Error deleting result:", error);
+        alert("Failed to delete result");
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "/login.html";
+    }
+
+    // تحميل النتائج تلقائياً عند فتح الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      loadResults();
+    });
+  </script>
+</body>
+</html>
