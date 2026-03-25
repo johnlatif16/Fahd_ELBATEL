@@ -153,7 +153,7 @@
         
         if (res.ok) {
           localStorage.setItem("token", data.token);
-          window.location.href = "/dashboard.html";
+          window.location.href = "/dashboard";
         } else {
           errorElement.innerText = data.message || "Login failed";
           errorElement.style.display = "block";
