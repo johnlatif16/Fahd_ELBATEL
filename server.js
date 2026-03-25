@@ -23,12 +23,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // 👇 ده أهم تعديل (root route)
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // (اختياري) روت لصفحة اللوجين
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+  res.sendFile(path.join(__dirname, "login.html"));
 });
 
 const FIREBASE_CONFIG = JSON.parse(process.env.FIREBASE_CONFIG);
