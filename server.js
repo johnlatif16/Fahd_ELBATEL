@@ -80,7 +80,7 @@ app.post("/api/track-attempt", async (req, res) => {
     res.json({ message: "Attempt tracked successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -103,7 +103,7 @@ app.get("/api/attempts/:phone", async (req, res) => {
     res.json(attempts);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -152,10 +152,10 @@ app.post("/api/submit", async (req, res) => {
       allowedRetake: false
     });
 
-    res.json({ message: "Submitted successfully" });
+    res.json({ message: "تم الإرسال بنجاح" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -175,7 +175,7 @@ app.get("/api/results", verifyToken, async (req, res) => {
     res.json(results);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -183,10 +183,10 @@ app.get("/api/results", verifyToken, async (req, res) => {
 app.delete("/api/results/:id", verifyToken, async (req, res) => {
   try {
     await db.collection("results").doc(req.params.id).delete();
-    res.json({ message: "Deleted successfully" });
+    res.json({ message: "تم الحذف بنجاح" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -197,10 +197,10 @@ app.post("/api/results/:id/allow-retake", verifyToken, async (req, res) => {
       allowedRetake: true,
       retakeAllowedAt: new Date()
     });
-    res.json({ message: "Retake allowed" });
+    res.json({ message: "إعادة الاختبار مسموح بها" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -211,10 +211,10 @@ app.post("/api/results/:id/disallow-retake", verifyToken, async (req, res) => {
       allowedRetake: false,
       retakeDisallowedAt: new Date()
     });
-    res.json({ message: "Retake disallowed" });
+    res.json({ message: "إعادة الاختبار غير مسموحة" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -241,7 +241,7 @@ app.get("/api/check-retake/:phone", async (req, res) => {
     res.json({ allowedRetake: latest.allowedRetake || false });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
