@@ -427,11 +427,11 @@
     // دالة لإنشاء عرض الأسئلة والإجابات
     function createQuestionsDisplay(userAnswers) {
       if (!userAnswers || Object.keys(userAnswers).length === 0) {
-        return '<div class="questions-container"><p>No answers available for this student</p></div>';
+        return '<div class="questions-container"><p>لا توجد إجابات متاحة لهذا الشخص</p></div>';
       }
 
       let html = '<div class="questions-container">';
-      html += '<h3>Student Answers Details</h3>';
+      html += '<h3>تفاصيل إجابات الشخص</h3>';
       
       Object.keys(questionTexts).forEach(questionId => {
         const userAnswer = userAnswers[questionId];
@@ -595,7 +595,7 @@
           tbody.innerHTML = `
             <tr>
               <td colspan="7" class="no-results">
-                No quiz results available
+                لا توجد نتائج للاختبار
               </td>
             </tr>
           `;
@@ -621,8 +621,8 @@
             
             const isAllowed = r.allowedRetake === true;
             const statusBadge = isAllowed 
-              ? '<span class="status-badge status-allowed">Allowed</span>' 
-              : '<span class="status-badge status-disallowed">Not Allowed</span>';
+              ? '<span class="status-badge status-allowed">مسموح</span>' 
+              : '<span class="status-badge status-disallowed">غير مسموح</span>';
             
             // التأكد من وجود userAnswers
             const hasUserAnswers = r.userAnswers && Object.keys(r.userAnswers).length > 0;
@@ -637,9 +637,6 @@
                 <td>${statusBadge}</td>
                 <td class="action-cell">
                   <div class="action-buttons">
-                    <button class="btn-info" onclick="showUserAttempts('${r.id}', '${r.phone}')">
-                      عرض المحاولات
-                    </button>
                     <button class="btn-info toggle-questions-btn" onclick="toggleQuestions('${r.id}')">
                       ${hasUserAnswers ? 'اظهار الاسئلة بالاجابات' : 'لا توجد إجابات'}
                     </button>
@@ -647,7 +644,7 @@
                       ? `<button class="btn-warning" onclick="disallowRetake('${r.id}')">قفل</button>` 
                       : `<button class="btn-success" onclick="allowRetake('${r.id}')">فتح</button>`
                     }
-                    <button class="btn-danger" onclick="deleteResult('${r.id}')">Delete</button>
+                    <button class="btn-danger" onclick="deleteResult('${r.id}')">حذف</button>
                   </div>
                 </td>
               </tr>
@@ -673,7 +670,7 @@
         });
         
         if (res.ok) {
-          alert("Quiz retake allowed successfully");
+          alert("تمت إعادة الاختبار بنجاح");
           loadResults();
         } else {
           const data = await res.json();
@@ -696,7 +693,7 @@
         });
         
         if (res.ok) {
-          alert("Quiz retake disallowed successfully");
+          alert("تم رفض إعادة الاختبار بنجاح");
           loadResults();
         } else {
           const data = await res.json();
@@ -709,7 +706,7 @@
     }
 
     async function deleteResult(id) {
-      if (!confirm("Are you sure you want to delete this result? The user will be able to retake the quiz.")) {
+      if (!confirm("هل أنت متأكد من رغبتك في حذف هذه النتيجة؟ سيتمكن المستخدم من إعادة إجراء الاختبار.")) {
         return;
       }
       
@@ -723,7 +720,7 @@
         });
         
         if (res.ok) {
-          alert("Result deleted successfully");
+          alert("تم حذف النتيجة بنجاح");
           loadResults();
         } else {
           const data = await res.json();
