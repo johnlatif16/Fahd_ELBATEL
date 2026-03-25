@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fahd ELBATEL</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+      --success: #28a745;
+      --danger: #dc3545;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      min-height: 100vh;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+    }
+    
+    h2 {
+      color: var(--dark);
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 15px;
+    }
+    
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+    
+    .question {
+      margin-bottom: 25px;
+      background: var(--light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .question p {
+      font-weight: 600;
+      margin-top: 0;
+      color: var(--dark);
+    }
+    
+    .question label {
+      display: block;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .question label:hover {
+      background: rgba(0, 123, 255, 0.1);
+    }
+    
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .success {
+      background: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+    
+    .info {
+      background: rgba(0, 123, 255, 0.1);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      box-sizing: border-box;
+      font-size: 16px;
+      transition: border 0.3s;
+    }
+    
+    input[type="text"]:focus, input[type="tel"]:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+    
+    button {
+      padding: 12px 25px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .btn-success {
+      background: var(--success);
+    }
+    
+    .btn-success:hover {
+      background: #218838;
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+    }
+    
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.5s;
+    }
+    
+    .timer {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+      color: var(--dark);
+    }
+    
+    .retake-info {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid #ffc107;
+      color: #856404;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    /* إضافة أنيميشن للتحذير */
+    @keyframes warningPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    .warning-message {
+      animation: warningPulse 2s infinite;
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      color: #856404;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Fahd ELBATEL</h2>
+    
+    <div id="user-info" class="card">
+      <h3>أدخل معلوماتك</h3>
+      <input type="text" id="name" placeholder="أدخل اسمك بالكامل" />
+      <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" />
+      <div class="text-center">
+        <button onclick="startQuiz()">ابدأ</button>
+      </div>
+    </div>
+
+    <div id="quiz-container" class="hidden">
+      <div class="warning-message">
+        ⚠️ تحذير: إذا قمت بتحديث الصفحة، سيتم إرسال الاختبار تلقائياً!
+      </div>
+      <div class="timer" id="timer">الوقت: 2:00</div>
+      <div class="progress-bar">
+        <div class="progress" id="progress" style="width: 0%"></div>
+      </div>
+      
+      <form id="quiz">
+        <!-- الأسئلة هنا (نفس الأسئلة السابقة) -->
+        <div class="question">
+          <p>1. ما هو اليوم المفضل لدي من ايام الاسبوع؟</p>
+          <label><input type="radio" name="q1" value="A" />السبت</label>
+          <label><input type="radio" name="q1" value="B" />الاحد</label>
+          <label><input type="radio" name="q1" value="C" />الاثنين</label>
+          <label><input type="radio" name="q1" value="D" />الثلاثاء</label>
+          <label><input type="radio" name="q1" value="E" />الاربعاء</label>
+         <label><input type="radio" name="q1" value="F" />الخميس</label>
+         <label><input type="radio" name="q1" value="G" />الجمعة</label>
+        </div>
+        <div class="question">
+          <p>2. ما هو اكثر تطبيق استخدمه؟</p>
+          <label><input type="radio" name="q2" value="A" />تيك توك</label>
+          <label><input type="radio" name="q2" value="B" />نيتفلكس</label>
+          <label><input type="radio" name="q2" value="C" /> يوتيوب</label>
+          <label><input type="radio" name="q2" value="D" />لا شئ مما سبق</label>
+        </div>
+
+<div class="question">
+          <p>3. ما هو موسمي المفضل؟</p>
+          <label><input type="radio" name="q3" value="A" />الصيف</label>
+          <label><input type="radio" name="q3" value="B" />الشتاء</label>
+          <label><input type="radio" name="q3" value="C" />الخريف</label>
+          <label><input type="radio" name="q3" value="D" />الربيع</label>
+</div>
+        ,
+        
+        <div class="text-center">
+          <button type="button" onclick="submitQuiz()" id="submit-btn">Submit Quiz</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="result hidden" id="result"></div>
+  </div>
+
+  <script>
+    // الإجابات الصحيحة
+    const correctAnswers = {
+      q1: "B", q2: "A", q3: "B"
+    };
+    
+    let timeLeft = 120;
+    let timerInterval;
+    let quizSubmitted = false;
+    let refreshWarningShown = false;
+    let autoSubmitOnUnload = false;
+
+    // تتبع المحاولات
+    async function trackAttempt(action) {
+      const phone = localStorage.getItem("userPhone");
+      if (phone) {
+        try {
+          const response = await fetch("/api/track-attempt", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ phone, action })
+          });
+          
+          if (!response.ok) {
+            console.error("Failed to track attempt:", await response.text());
+          }
+        } catch (error) {
+          console.error("Error tracking attempt:", error);
+        }
+      }
+    }
+
+    // التحقق من حالة إعادة الاختبار
+    async function checkRetakeStatus() {
+      const userPhone = localStorage.getItem('userPhone');
+      if (userPhone) {
+        try {
+          const response = await fetch(`/api/check-retake/${userPhone}`);
+          const data = await response.json();
+          
+          if (response.ok && data.allowedRetake) {
+            localStorage.removeItem('quizSubmitted');
+            document.getElementById('user-info').innerHTML = `
+              <div class="retake-info">
+                <p>يُسمح لك بإعادة الاختبار!</p>
+                <p>يرجى إدخال معلوماتك وبدء الاختبار.</p>
+              </div>
+              <h3>أدخل معلوماتك</h3>
+              <input type="text" id="name" placeholder="أدخل اسمك بالكامل" value="${localStorage.getItem('userName') || ''}" />
+              <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" value="${userPhone}" />
+              <div class="text-center">
+                <button onclick="startQuiz()">ابدأ</button>
+              </div>
+            `;
+          } else if (localStorage.getItem('quizSubmitted')) {
+            document.getElementById('user-info').innerHTML = `
+              <div class="result info">
+                <p>لقد قمت بالفعل بإرسال الاختبار.</p>
+                <p>يرجى الاتصال بالمسؤول إذا كنت بحاجة إلى إعادة الاختبار.</p>
+              </div>
+            `;
+          }
+        } catch (error) {
+          console.error("Error checking retake status:", error);
+          if (localStorage.getItem('quizSubmitted')) {
+            document.getElementById('user-info').innerHTML = `
+              <div class="result info">
+                <p>لقد قمت بالفعل بإرسال الاختبار.</p>
+                <p>يرجى الاتصال بالمسؤول إذا كنت بحاجة إلى إعادة الاختبار.</p>
+              </div>
+            `;
+          }
+        }
+      } else if (localStorage.getItem('quizSubmitted')) {
+        document.getElementById('user-info').innerHTML = `
+          <div class="result info">
+            <p>لقد قمت بالفعل بإرسال الاختبار.</p>
+            <p>يرجى الاتصال بالمسؤول إذا كنت بحاجة إلى إعادة الاختبار.</p>
+          </div>
+        `;
+      }
+    }
+
+    checkRetakeStatus();
+
+    // إعداد نظام التحذير من التحديث
+    function setupRefreshWarning() {
+      const beforeUnloadHandler = function (e) {
+        if (!quizSubmitted && !refreshWarningShown) {
+          refreshWarningShown = true;
+          const confirmationMessage = '⚠️ تحذير: إذا قمت بتحديث الصفحة، سيتم إرسال الاختبار تلقائياً! هل أنت متأكد أنك تريد المتابعة؟';
+          e.returnValue = confirmationMessage;
+          return confirmationMessage;
+        }
+      };
+
+      const unloadHandler = async function() {
+        if (!quizSubmitted && refreshWarningShown) {
+          autoSubmitOnUnload = true;
+          await submitOnRefresh();
+        }
+      };
+
+      window.addEventListener('beforeunload', beforeUnloadHandler);
+      window.addEventListener('unload', unloadHandler);
+
+      // حفظ المرجع للإزالة لاحقاً
+      window._refreshHandlers = {
+        beforeUnload: beforeUnloadHandler,
+        unload: unloadHandler
+      };
+    }
+
+    // الإرسال التلقائي عند التحديث
+    async function submitOnRefresh() {
+      const form = document.getElementById("quiz");
+      const formData = new FormData(form);
+      let correct = 0, wrong = 0;
+      
+      const userAnswers = {};
+      Object.keys(correctAnswers).forEach(q => {
+        const ans = formData.get(q);
+        userAnswers[q] = ans || null;
+        if (ans === correctAnswers[q]) correct++; 
+        else wrong++;
+      });
+      
+      const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
+      
+      const data = {
+        name: localStorage.getItem("userName"),
+        phone: localStorage.getItem("userPhone"),
+        correct, 
+        wrong, 
+        score,
+        userAnswers
+      };
+      
+      // استخدام sendBeacon للإرسال الموثوق
+      const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+      navigator.sendBeacon("/api/submit", blob);
+      
+      await trackAttempt('refresh_auto_submit');
+    }
+
+    async function startQuiz() {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      
+      if (!name || !phone) {
+        alert("يرجى إدخال اسمك ورقم هاتفك");
+        return;
+      }
+      
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userPhone", phone);
+      
+      await trackAttempt('start');
+      
+      document.getElementById("user-info").classList.add("hidden");
+      document.getElementById("quiz-container").classList.remove("hidden");
+      
+      setupRefreshWarning();
+      startTimer();
+      
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', updateProgress);
+      });
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function updateProgress() {
+      const totalQuestions = Object.keys(correctAnswers).length;
+      const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+      const progress = (answeredQuestions / totalQuestions) * 100;
+      document.getElementById('progress').style.width = `${progress}%`;
+    }
+
+    async function submitQuiz() {
+      if (quizSubmitted) return;
+      
+      quizSubmitted = true;
+      autoSubmitOnUnload = false;
+      clearInterval(timerInterval);
+      
+      const form = document.getElementById("quiz");
+      const formData = new FormData(form);
+      let correct = 0, wrong = 0;
+      
+      const userAnswers = {};
+      Object.keys(correctAnswers).forEach(q => {
+        const ans = formData.get(q);
+        userAnswers[q] = ans || null;
+        if (ans === correctAnswers[q]) correct++; 
+        else wrong++;
+      });
+      
+      const score = Math.round((correct / Object.keys(correctAnswers).length) * 100);
+      
+      const resultDiv = document.getElementById("result");
+      
+      try {
+        const response = await fetch("/api/submit", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            name: localStorage.getItem("userName"),
+            phone: localStorage.getItem("userPhone"),
+            correct, 
+            wrong, 
+            score,
+            userAnswers
+          })
+        });
+            
+        const data = await response.json();
+        
+        if (response.ok) {
+          resultDiv.innerHTML = `
+            <h3>نتيجة الاختبار</h3>
+            <p>نتيجة: ${score}%</p>
+            <p>الاجابات الصحيحة: ${correct}</p>
+            <p>الاجابات الخاطئة: ${wrong}</p>
+            <p>شكراً لك على إكمال الاختبار!</p>
+          `;
+          localStorage.setItem('quizSubmitted', 'true');
+        } else {
+          resultDiv.innerHTML = `
+            <h3>خطأ</h3>
+            <p>${data.message || 'فشل في إرسال الاختبار'}</p>
+          `;
+          resultDiv.classList.add("info");
+        }
+      } catch (error) {
+        console.error("Error submitting quiz:", error);
+        resultDiv.innerHTML = `
+          <h3>خطأ في الشبكة</h3>
+          <p>يرجى المحاولة مرة أخرى لاحقاً</p>
+        `;
+        resultDiv.classList.add("info");
+      }
+      
+      if (score >= 70) {
+        resultDiv.classList.add("success");
+      } else {
+        resultDiv.classList.add("info");
+      }
+      
+      resultDiv.classList.remove("hidden");
+      document.getElementById("quiz-container").classList.add("hidden");
+      document.getElementById("submit-btn").disabled = true;
+      
+      // إزالة مستمعي الأحداث
+      if (window._refreshHandlers) {
+        window.removeEventListener('beforeunload', window._refreshHandlers.beforeUnload);
+        window.removeEventListener('unload', window._refreshHandlers.unload);
+      }
+    }
+  </script>
+</body>
+</html>
