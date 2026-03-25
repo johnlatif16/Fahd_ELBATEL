@@ -31,6 +31,10 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "login.html"));
 });
 
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "dashboard.html"));
+});
+
 const FIREBASE_CONFIG = JSON.parse(process.env.FIREBASE_CONFIG);
 initializeApp({ credential: cert(FIREBASE_CONFIG) });
 const db = getFirestore();
