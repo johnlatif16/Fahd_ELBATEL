@@ -234,7 +234,7 @@
       <div class="warning-message">
         ⚠️ تحذير: إذا قمت بتحديث الصفحة، سيتم إرسال الاختبار تلقائياً!
       </div>
-      <div class="timer" id="timer">الوقت: 2:00</div>
+      <div class="timer" id="timer">الوقت: 30:00</div>
       <div class="progress-bar">
         <div class="progress" id="progress" style="width: 0%"></div>
       </div>
@@ -242,30 +242,94 @@
       <form id="quiz">
         <!-- الأسئلة هنا (نفس الأسئلة السابقة) -->
         <div class="question">
-          <p>1. ما هو اليوم المفضل لدي من ايام الاسبوع؟</p>
-          <label><input type="radio" name="q1" value="A" />السبت</label>
-          <label><input type="radio" name="q1" value="B" />الاحد</label>
-          <label><input type="radio" name="q1" value="C" />الاثنين</label>
-          <label><input type="radio" name="q1" value="D" />الثلاثاء</label>
-          <label><input type="radio" name="q1" value="E" />الاربعاء</label>
-         <label><input type="radio" name="q1" value="F" />الخميس</label>
-         <label><input type="radio" name="q1" value="G" />الجمعة</label>
+          <p>1. اللون المفضل؟</p>
+          <label><input type="radio" name="q1" value="A" />اسود</label>
+          <label><input type="radio" name="q1" value="B" />ازرق</label>
+          <label><input type="radio" name="q1" value="C" />احمر</label>
+          <label><input type="radio" name="q1" value="D" />اخضر</label>
         </div>
         <div class="question">
-          <p>2. ما هو اكثر تطبيق استخدمه؟</p>
-          <label><input type="radio" name="q2" value="A" />تيك توك</label>
-          <label><input type="radio" name="q2" value="B" />نيتفلكس</label>
-          <label><input type="radio" name="q2" value="C" /> يوتيوب</label>
-          <label><input type="radio" name="q2" value="D" />لا شئ مما سبق</label>
+          <p>2. الصاحب المقرب؟</p>
+          <label><input type="radio" name="q2" value="A" />صاحب</label>
+          <label><input type="radio" name="q2" value="B" />صاحب</label>
+          <label><input type="radio" name="q2" value="C" /> صاحب</label>
+          <label><input type="radio" name="q2" value="D" />صاحب</label>
         </div>
 
-<div class="question">
-          <p>3. ما هو موسمي المفضل؟</p>
-          <label><input type="radio" name="q3" value="A" />الصيف</label>
-          <label><input type="radio" name="q3" value="B" />الشتاء</label>
-          <label><input type="radio" name="q3" value="C" />الخريف</label>
-          <label><input type="radio" name="q3" value="D" />الربيع</label>
-</div>
+        <div class="question">
+          <p>3. اكلتي المفضلة؟</p>
+          <label><input type="radio" name="q3" value="A" />اكلة</label>
+          <label><input type="radio" name="q3" value="B" />اكلة</label>
+          <label><input type="radio" name="q3" value="C" />اكلة</label>
+          <label><input type="radio" name="q3" value="D" />اكلة</label>
+        </div>
+
+        <div class="question">
+          <p>4. ما هو اكتر تطبيق بستخدمه؟</p>
+          <label><input type="radio" name="q4" value="A" />برنامج</label>
+          <label><input type="radio" name="q4" value="B" />برنامج</label>
+          <label><input type="radio" name="q4" value="C" />برنامج</label>
+          <label><input type="radio" name="q4" value="D" />برنامج</label>
+        </div>
+
+        <div class="question">
+          <p>5. اكتر يوم بحبه؟</p>
+          <label><input type="radio" name="q5" value="A" />السبت</label>
+          <label><input type="radio" name="q5" value="B" />الاحد</label>
+          <label><input type="radio" name="q5" value="C" />الاثنين</label>
+          <label><input type="radio" name="q5" value="D" />الثلاثاء</label>
+          <label><input type="radio" name="q5" value="E" />الاربعاء</label>
+         <label><input type="radio" name="q5" value="F" />الخميس</label>
+         <label><input type="radio" name="q5" value="G" />الجمعة</label>
+        </div>
+
+        <div class="question">
+          <p>6. تاريخ ميلادي؟</p>
+          <label><input type="radio" name="q6" value="A" />يوم</label>
+          <label><input type="radio" name="q6" value="B" />يوم</label>
+          <label><input type="radio" name="q6" value="C" />يوم</label>
+          <label><input type="radio" name="q6" value="D" />يوم</label>
+        </div>
+
+        <div class="question">
+          <p>7. ايه اكتر حاجة ممكن اصرف عليها فلوسي؟</p>
+          <label><input type="radio" name="q7" value="A" />حاجة</label>
+          <label><input type="radio" name="q7" value="B" />حاجة</label>
+          <label><input type="radio" name="q7" value="C" />حاجة</label>
+          <label><input type="radio" name="q7" value="D" />حاجة</label>
+        </div>
+
+        <div class="question">
+          <p>8. ما هو الموسم المفضل لدي؟</p>
+          <label><input type="radio" name="q8" value="A" />الصيف</label>
+          <label><input type="radio" name="q8" value="B" />الشتاء</label>
+          <label><input type="radio" name="q8" value="C" />الخريف</label>
+          <label><input type="radio" name="q8" value="D" />الربيع</label>
+        </div>
+
+        <div class="question">
+          <p>9. اكتر طريقة لبس بحبها؟</p>
+          <label><input type="radio" name="q9" value="A" />لبس</label>
+          <label><input type="radio" name="q9" value="B" />لبس</label>
+          <label><input type="radio" name="q9" value="C" />لبس</label>
+          <label><input type="radio" name="q9" value="D" />لبس</label>
+        </div>
+
+        <div class="question">
+          <p>10. اكتر رياضة ممكن مبقاش زهقان وانا بعملها؟</p>
+          <label><input type="radio" name="q10" value="A" />رياضة</label>
+          <label><input type="radio" name="q10" value="B" />رياضة</label>
+          <label><input type="radio" name="q10" value="C" />رياضة</label>
+          <label><input type="radio" name="q10" value="D" />رياضة</label>
+        </div>
+
+        <div class="question">
+          <p>11. اكتر افلام بحبها؟</p>
+          <label><input type="radio" name="q11" value="A" />فيلم</label>
+          <label><input type="radio" name="q11" value="B" />فيلم</label>
+          <label><input type="radio" name="q11" value="C" />فيلم</label>
+          <label><input type="radio" name="q11" value="D" />فيلم</label>
+        </div>
         ,
         
         <div class="text-center">
@@ -280,10 +344,12 @@
   <script>
     // الإجابات الصحيحة
     const correctAnswers = {
-      q1: "B", q2: "A", q3: "B"
+      q1: "B", q2: "A", q3: "B",q4: "B",
+      q5: "B", q6: "A", q7: "B", q8: "B",
+      q9: "B", q10: "A", q11: "B"
     };
     
-    let timeLeft = 120;
+    let timeLeft = 1800;
     let timerInterval;
     let quizSubmitted = false;
     let refreshWarningShown = false;
